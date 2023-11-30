@@ -71,7 +71,7 @@ public class TaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
-    @Operation(summary = "Get Product Selection Billing FAQ data")
+    @Operation(summary = "Create task")
     @ApiResponses(
         value = {
             @ApiResponse(responseCode = "201", description = "Task has been created successfully", content = {
@@ -114,6 +114,7 @@ public class TaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
+    @Operation(summary = "Update task")
     @ApiResponses(
         value = {
             @ApiResponse(responseCode = "200", description = "Task has been updated successfully", content = {
@@ -159,6 +160,7 @@ public class TaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
+    @Operation(summary = "Partial Update task")
     @ApiResponses(
         value = {
             @ApiResponse(responseCode = "200", description = "Task update", content = {
@@ -200,6 +202,7 @@ public class TaskResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
      */
     @OpenApiAvailable
+    @Operation(summary = "Get All tasks")
     @ApiResponses(
         value = {
             @ApiResponse(responseCode = "200", description = "Task information", content = {
@@ -228,6 +231,7 @@ public class TaskResource {
      * 404 (Not Found)}.
      */
     @OpenApiAvailable
+    @Operation(summary = "Get task")
     @ApiResponses(
         value = {
             @ApiResponse(responseCode = "200", description = "Task information", content = {
@@ -254,6 +258,7 @@ public class TaskResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @OpenApiAvailable
+    @Operation(summary = "Delete task")
     @ApiResponses(
         value = {
             @ApiResponse(responseCode = "204", description = "Task deleted", content = {@Content(schema = @Schema())}),
