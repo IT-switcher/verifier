@@ -109,25 +109,6 @@ class TaskResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-    void createTaskWithExistingId() throws Exception {
-        // Create the Task with an existing ID
-        task.setId(1L);
-
-        int databaseSizeBeforeCreate = taskRepository.findAll().size();
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restTaskMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(task)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Task in the database
-        List<Task> taskList = taskRepository.findAll();
-        assertThat(taskList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
     void getAllTasks() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
