@@ -107,7 +107,7 @@ public class UserTaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
-    @Operation(summary = "Assign Task to user")
+    @Operation(summary = "Update user task")
     @ApiResponses(
         value = {
             @ApiResponse(responseCode = "200", description = "Task has been updated", content = {
