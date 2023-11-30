@@ -77,9 +77,10 @@ public class TaskResource {
             @ApiResponse(responseCode = "201", description = "Task has been created successfully", content = {
                 @Content(schema = @Schema(implementation = TaskDTO.class))
             }),
-            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
-            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
         }
     )
     @PostMapping("/tasks")
@@ -118,9 +119,10 @@ public class TaskResource {
             @ApiResponse(responseCode = "200", description = "Task has been updated successfully", content = {
                 @Content(schema = @Schema(implementation = TaskDTO.class))
             }),
-            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
-            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
         }
     )
     @PutMapping("/tasks/{id}")
@@ -162,9 +164,10 @@ public class TaskResource {
             @ApiResponse(responseCode = "200", description = "Task update", content = {
                 @Content(schema = @Schema(implementation = TaskDTO.class))
             }),
-            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
-            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
         }
     )
     @PatchMapping(value = "/tasks/{id}", consumes = {"application/json", "application/merge-patch+json"})
@@ -202,9 +205,10 @@ public class TaskResource {
             @ApiResponse(responseCode = "200", description = "Task information", content = {
                 @Content(array = @ArraySchema(schema = @Schema(implementation = TaskDTO.class)))
             }),
-            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
-            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
         }
     )
     @GetMapping("/tasks")
@@ -227,12 +231,13 @@ public class TaskResource {
     @ApiResponses(
         value = {
             @ApiResponse(responseCode = "200", description = "Task information", content = {
-                @Content(array = @ArraySchema(schema = @Schema(implementation = TaskDTO.class)))
+                @Content(schema = @Schema(implementation = TaskDTO.class))
             }),
-            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
-            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
-            @ApiResponse(responseCode = "404", description = "Task is not found"),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", description = "Task is not found", content = {@Content(schema = @Schema())}),
         }
     )
     @GetMapping("/tasks/{id}")
@@ -251,12 +256,11 @@ public class TaskResource {
     @OpenApiAvailable
     @ApiResponses(
         value = {
-            @ApiResponse(responseCode = "204", description = "Task deleted", content = {
-                @Content(array = @ArraySchema(schema = @Schema(implementation = TaskDTO.class)))
-            }),
-            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
-            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+            @ApiResponse(responseCode = "204", description = "Task deleted", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
         }
     )
     @DeleteMapping("/tasks/{id}")
