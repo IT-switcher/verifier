@@ -4,8 +4,13 @@ import com.isadounikau.sqiverifier.config.springdoc.OpenApiAvailable;
 import com.isadounikau.sqiverifier.domain.UserTask;
 import com.isadounikau.sqiverifier.repository.UserTaskRepository;
 import com.isadounikau.sqiverifier.service.UserTaskService;
-import com.isadounikau.sqiverifier.service.dto.UserTaskResponseDto;
+import com.isadounikau.sqiverifier.service.dto.usertask.UserTaskResponseDto;
 import com.isadounikau.sqiverifier.web.rest.errors.BadRequestAlertException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -65,6 +70,18 @@ public class UserTaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
+    @Operation(summary = "Assign Task to user")
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "201", description = "Task has been assigned to user", content = {
+                @Content(schema = @Schema(implementation = UserTask.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
+        }
+    )
     @PostMapping("/user-tasks")
     public ResponseEntity<UserTask> createUserTask(@RequestBody UserTask userTask) throws URISyntaxException {
         log.debug("REST request to save UserTask : {}", userTask);
@@ -90,6 +107,18 @@ public class UserTaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
+    @Operation(summary = "Assign Task to user")
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "Task has been updated", content = {
+                @Content(schema = @Schema(implementation = UserTask.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
+        }
+    )
     @PutMapping("/user-tasks/{id}")
     public ResponseEntity<UserTask> updateUserTask(
         @PathVariable(value = "id", required = false) final Long id,
@@ -129,6 +158,18 @@ public class UserTaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
+    @Operation(summary = "Update user task")
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "Task has been partially updated", content = {
+                @Content(schema = @Schema(implementation = UserTask.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
+        }
+    )
     @PatchMapping(value = "/user-tasks/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<UserTask> partialUpdateUserTask(
         @PathVariable(value = "id", required = false) final Long id,
@@ -161,6 +202,18 @@ public class UserTaskResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userTasks in body.
      */
     @OpenApiAvailable
+    @Operation(summary = "Get all assigned tasks for all users")
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "All user tasks", content = {
+                @Content(schema = @Schema(implementation = UserTask.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
+        }
+    )
     @GetMapping("/user-tasks")
     public ResponseEntity<List<UserTaskResponseDto>> getAllUserTasks(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of UserTasks");
@@ -178,6 +231,18 @@ public class UserTaskResource {
      * {@code 404 (Not Found)}.
      */
     @OpenApiAvailable
+    @Operation(summary = "Get user task")
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "User Task", content = {
+                @Content(schema = @Schema(implementation = UserTask.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
+        }
+    )
     @GetMapping("/user-tasks/{id}")
     public ResponseEntity<UserTask> getUserTask(@PathVariable Long id) {
         log.debug("REST request to get UserTask : {}", id);
@@ -192,6 +257,16 @@ public class UserTaskResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @OpenApiAvailable
+    @Operation(summary = "Unassigne user task")
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "204", description = "All user tasks", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
+                {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token", content = {@Content(schema = @Schema())}),
+        }
+    )
     @DeleteMapping("/user-tasks/{id}")
     public ResponseEntity<Void> deleteUserTask(@PathVariable Long id) {
         log.debug("REST request to delete UserTask : {}", id);

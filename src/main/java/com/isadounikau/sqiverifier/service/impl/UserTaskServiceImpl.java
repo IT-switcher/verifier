@@ -5,7 +5,7 @@ import com.isadounikau.sqiverifier.domain.enums.Role;
 import com.isadounikau.sqiverifier.repository.UserTaskRepository;
 import com.isadounikau.sqiverifier.service.UserAuthService;
 import com.isadounikau.sqiverifier.service.UserTaskService;
-import com.isadounikau.sqiverifier.service.dto.UserTaskResponseDto;
+import com.isadounikau.sqiverifier.service.dto.usertask.UserTaskResponseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
