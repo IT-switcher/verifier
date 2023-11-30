@@ -260,7 +260,7 @@ public class UserTaskResource {
     @Operation(summary = "Unassigne user task")
     @ApiResponses(
         value = {
-            @ApiResponse(responseCode = "204", description = "All user tasks", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "204", description = "Delete user tasks", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "500", description = "Internal Service Error", content = {@Content(schema = @Schema())}),
             @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request", content =
                 {@Content(schema = @Schema())}),
