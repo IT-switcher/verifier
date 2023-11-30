@@ -3,8 +3,15 @@ package com.isadounikau.sqiverifier.web.rest;
 import com.isadounikau.sqiverifier.config.springdoc.OpenApiAvailable;
 import com.isadounikau.sqiverifier.repository.TaskRepository;
 import com.isadounikau.sqiverifier.service.TaskService;
-import com.isadounikau.sqiverifier.service.dto.TaskDTO;
+import com.isadounikau.sqiverifier.service.dto.task.TaskCreateRequestDTO;
+import com.isadounikau.sqiverifier.service.dto.task.TaskDTO;
 import com.isadounikau.sqiverifier.web.rest.errors.BadRequestAlertException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,18 +71,35 @@ public class TaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
-    @PostMapping("/tasks")
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO task) throws URISyntaxException {
-        log.debug("REST request to save Task : {}", task);
-        if (task.getId() != null) {
-            throw new BadRequestAlertException("A new task cannot already have an ID", ENTITY_NAME, "idexists");
+    @Operation(summary = "Get Product Selection Billing FAQ data")
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "201", description = "Task has been created successfully", content = {
+                @Content(schema = @Schema(implementation = TaskDTO.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
         }
-        TaskDTO result = taskService.save(task);
+    )
+    @PostMapping("/tasks")
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskCreateRequestDTO task) throws URISyntaxException {
+        log.debug("REST request to save Task : {}", task);
+        TaskDTO saveTask = getTaskDTO(task);
+        TaskDTO result = taskService.save(saveTask);
         return ResponseEntity
             .created(new URI("/api/tasks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME,
                 result.getId().toString()))
             .body(result);
+    }
+
+    private TaskDTO getTaskDTO(TaskCreateRequestDTO task) {
+        TaskDTO saveTask = new TaskDTO();
+        saveTask.setText(task.getText());
+        saveTask.setTitle(task.getTitle());
+        saveTask.setAnswer(task.getAnswer());
+        return saveTask;
     }
 
     /**
@@ -89,10 +113,19 @@ public class TaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "Task has been updated successfully", content = {
+                @Content(schema = @Schema(implementation = TaskDTO.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+        }
+    )
     @PutMapping("/tasks/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable(value = "id", required = false) final Long id,
-                                           @RequestBody TaskDTO task)
-        throws URISyntaxException {
+                                              @RequestBody TaskDTO task) throws URISyntaxException {
         log.debug("REST request to update Task : {}, {}", id, task);
         if (task.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -124,10 +157,19 @@ public class TaskResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @OpenApiAvailable
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "Task update", content = {
+                @Content(schema = @Schema(implementation = TaskDTO.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+        }
+    )
     @PatchMapping(value = "/tasks/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<TaskDTO> partialUpdateTask(@PathVariable(value = "id", required = false) final Long id,
-                                                  @RequestBody TaskDTO task)
-        throws URISyntaxException {
+                                                     @RequestBody TaskDTO task) throws URISyntaxException {
         log.debug("REST request to partial update Task partially : {}, {}", id, task);
         if (task.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -155,6 +197,16 @@ public class TaskResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
      */
     @OpenApiAvailable
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "Task information", content = {
+                @Content(array = @ArraySchema(schema = @Schema(implementation = TaskDTO.class)))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+        }
+    )
     @GetMapping("/tasks")
     public ResponseEntity<List<TaskDTO>> getAllTasks(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Tasks");
@@ -172,6 +224,17 @@ public class TaskResource {
      * 404 (Not Found)}.
      */
     @OpenApiAvailable
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "Task information", content = {
+                @Content(array = @ArraySchema(schema = @Schema(implementation = TaskDTO.class)))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+            @ApiResponse(responseCode = "404", description = "Task is not found"),
+        }
+    )
     @GetMapping("/tasks/{id}")
     public ResponseEntity<TaskDTO> getTask(@PathVariable Long id) {
         log.debug("REST request to get Task : {}", id);
@@ -186,6 +249,16 @@ public class TaskResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @OpenApiAvailable
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "204", description = "Task deleted", content = {
+                @Content(array = @ArraySchema(schema = @Schema(implementation = TaskDTO.class)))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Service Error"),
+            @ApiResponse(responseCode = "400", description = "Client Error, can be fixed by changing request"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, update access token"),
+        }
+    )
     @DeleteMapping("/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         log.debug("REST request to delete Task : {}", id);

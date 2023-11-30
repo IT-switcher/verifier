@@ -3,7 +3,7 @@ package com.isadounikau.sqiverifier.service.impl;
 import com.isadounikau.sqiverifier.domain.Task;
 import com.isadounikau.sqiverifier.repository.TaskRepository;
 import com.isadounikau.sqiverifier.service.TaskService;
-import com.isadounikau.sqiverifier.service.dto.TaskDTO;
+import com.isadounikau.sqiverifier.service.dto.task.TaskDTO;
 import com.isadounikau.sqiverifier.service.mapper.TaskMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.isadounikau.sqiverifier.service.dto;
+package com.isadounikau.sqiverifier.service.dto.task;
 
 import jakarta.validation.constraints.NotNull;
 

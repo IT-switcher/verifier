@@ -1,6 +1,6 @@
 package com.isadounikau.sqiverifier.service;
 
-import com.isadounikau.sqiverifier.service.dto.TaskDTO;
+import com.isadounikau.sqiverifier.service.dto.task.TaskDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
