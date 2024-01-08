@@ -61,10 +61,17 @@ You should be able to observe application logs in Docker Desctop and application
 
 Now you should be able to open application by accessing http://localhost:8080/ 
 
-Users:
+Users (localhost):
 |username |password |
 |---------|----------|
 |admin | admin |
+|user_teacher | user |
+|user_student | user |
+
+Users (live, staging):
+|username |password |
+|---------|----------|
+|admin_automation | admin_automation |
 |user_teacher | user |
 |user_student | user |
 
