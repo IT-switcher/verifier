@@ -60,8 +60,8 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> handleAnyException(Throwable ex, NativeWebRequest request) {
-        ProblemDetailWithCause pdCause = wrapAndCustomizeProblem(ex, request);
         logger.error(ex);
+        ProblemDetailWithCause pdCause = wrapAndCustomizeProblem(ex, request);
         return handleExceptionInternal(
             (Exception) ex,
             pdCause,
