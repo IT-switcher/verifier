@@ -75,6 +75,7 @@ Users (live, staging):
 |user_teacher | user |
 |user_student | user |
 
+After a new user creation you need to activate this new user as admin (Administration/User management -> find this new user and activate)
 
 ## Testing
 
